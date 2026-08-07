@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cues
+    ports:
+      - '5432:5432'
+    volumes:
+      - cues_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d cues']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  cues_pgdata:
